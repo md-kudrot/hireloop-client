@@ -103,7 +103,7 @@ function NavBar() {
                             <div className="h-6 w-px bg-white/20" />
 
                             <Link
-                                href="/login"
+                                href="/signin"
                                 className="text-violet-400 hover:text-violet-300"
                             >
                                 Sign In
