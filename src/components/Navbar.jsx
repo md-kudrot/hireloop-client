@@ -2,18 +2,21 @@
 
 import { useState } from "react";
 import { Link, Button } from "@heroui/react";
+import Image from "next/image";
 
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <nav className="fixed top-5 left-0 right-0 z-50">
+        <nav className="fixed  top-5 left-0 right-0 z-50 ">
+          
             <div className="mx-auto max-w-7xl px-4">
                 <div className="
                     flex h-20 items-center justify-between
                     rounded-2xl
                     border border-white/10
                     bg-black/30
+                    
                     px-6
                     backdrop-blur-xl
                     shadow-[0_8px_32px_rgba(0,0,0,0.4)]
