@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Eye, EyeSlash, Envelope, Lock, CircleCheck } from '@gravity-ui/icons';
+import { authClient } from '@/lib/auth-client';
 
 export default function SignUpPage() {
     const [formData, setFormData] = useState({
@@ -58,6 +59,55 @@ export default function SignUpPage() {
         return 'text-gray-400';
     };
 
+    const handleSignUp =async (e) => {
+        e.preventDefault();
+        console.log('Form submitted');
+        const fromData = new FormData(e.currentTarget);
+        const user = Object.fromEntries(fromData.entries());
+        console.log(user);
+
+        const { data, error } = await authClient.signUp.email({
+            name: user.firstName + ' ' + user.lastName, // required
+            email: user.email, // required
+            password: user.password, // required
+        });
+
+        if(data){
+            console.log('signup success ');
+        }
+
+        if(error){
+            console.log('signup error ', error);
+        }
+
+    }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     const formData = new FormData(e.currentTarget);
+    //     const user = Object.fromEntries(formData.entries());
+    //     console.log(user);
+
+    //     const { data, error } = await authClient.signUp.email({
+    //         email: user.email,
+    //         password: user.password,
+    //         name: user.name,
+    //         image: user.image
+    //     })
+    //     // console.log(error, data);
+
+    //     if (data) {
+    //         toast.success('Account created successfully!');
+    //         redirect('/')
+    //     }
+
+    //     if (error) {
+    //         toast.error(error.message)
+    //     }
+
+    // }
+
     return (
         <div className="min-h-screen w-full absolute z-20 bg-black flex items-center justify-center px-6 py-12">
             <div className="w-full max-w-md">
@@ -84,7 +134,7 @@ export default function SignUpPage() {
                 </div>
 
                 {/* Form Container */}
-                <form className="space-y-4 mb-6">
+                <form onSubmit={handleSignUp} className="space-y-4 mb-6">
 
                     {/* Name Fields Row */}
                     <div className="grid grid-cols-2 gap-4">

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Eye, EyeSlash, Envelope, Lock, LogoWindows } from '@gravity-ui/icons';
+import { authClient } from '@/lib/auth-client';
+import { redirect } from 'next/navigation';
 
 export default function SignInPage() {
     const [email, setEmail] = useState('');
@@ -45,6 +47,29 @@ export default function SignInPage() {
         return 'text-gray-400';
     };
 
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+        
+        const fromData = new FormData(e.currentTarget);
+        const user = Object.fromEntries(fromData.entries());
+        console.log(user);
+
+        const { data, error } = await authClient.signIn.email({
+            email: user.email, 
+            password: user.password, 
+        });
+
+        if (error) {
+            console.error('Sign-in error:', error);
+            alert('Failed to sign in. Please check your credentials and try again.');
+        } else {
+            console.log('Sign-in successful:', data);
+            alert('Sign-in successful! Welcome back.');
+            redirect('/'); 
+        }
+
+    };
+
     return (
         <div className="min-h-screen w-full absolute z-20  bg-black flex items-center justify-center px-6 py-12">
             <div className="w-full max-w-md">
@@ -71,7 +96,7 @@ export default function SignInPage() {
                 </div>
 
                 {/* Form Container */}
-                <form className="space-y-5 mb-6">
+                <form onSubmit={handleSignUp} className="space-y-5 mb-6">
 
                     {/* Email Field */}
                     <div>
@@ -79,13 +104,14 @@ export default function SignInPage() {
                             Email Address
                         </label>
                         <div className="relative">
-                            <Envelope 
+                            <Envelope
                                 size={18}
                                 className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
                             />
                             <input
                                 id="email"
                                 type="email"
+                                name='email'
                                 placeholder="you@example.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -115,6 +141,7 @@ export default function SignInPage() {
                             <input
                                 id="password"
                                 type={showPassword ? 'text' : 'password'}
+                                name='password'
                                 placeholder="Enter your password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
