@@ -3,6 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Eye, EyeSlash, Envelope, Lock, CircleCheck, Alarm } from "@gravity-ui/icons"
+import { Description, Label, Radio, RadioGroup } from "@heroui/react"
+
 import { authClient } from "@/lib/auth-client"
 import { redirect } from "next/navigation"
 
@@ -70,7 +72,8 @@ export default function SignUpPage() {
         const { data, error } = await authClient.signUp.email({
             name: user.firstName + " " + user.lastName, // required
             email: user.email, // required
-            password: user.password // required
+            password: user.password, // required
+            role: user.plan
         })
 
         if (data) {
@@ -118,13 +121,7 @@ export default function SignUpPage() {
                         <span className="text-blue-500">hire</span>
                         <span className="text-pink-500">loop</span>
                     </h1>
-                    <p className="text-gray-400 text-sm mt-2">The AI-native career platform</p>
-                </div>
-
-                {/* Welcome Text */}
-                <div className="mb-8 text-center">
-                    <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Join HireLoop</h2>
-                    <p className="text-gray-400 text-sm">Start your journey to find your dream job</p>
+                    <p className="text-gray-400 text-sm mt-2">Start your journey to find your dream job</p>
                 </div>
 
                 {/* Form Container */}
@@ -286,6 +283,32 @@ export default function SignUpPage() {
                                 )}
                             </div>
                         )}
+                    </div>
+
+                    {/* user */}
+                    <div className="">
+                        <RadioGroup defaultValue="Job_seeker" name="plan">
+                            <Label>Please select your role</Label>
+                            <Description>So we can tailor the experience for you</Description>
+                            <Radio value="Job_seeker">
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                <Radio.Content>
+                                    <Label>Job seeker</Label>
+                                    <Description>If you are looking for job opportunities</Description>
+                                </Radio.Content>
+                            </Radio>
+                            <Radio value="Recruiter">
+                                <Radio.Control>
+                                    <Radio.Indicator />
+                                </Radio.Control>
+                                <Radio.Content>
+                                    <Label>Recruiter</Label>
+                                    <Description>If you are looking to hire talent</Description>
+                                </Radio.Content>
+                            </Radio>
+                        </RadioGroup>
                     </div>
 
                     {/* Terms & Conditions Checkbox */}
