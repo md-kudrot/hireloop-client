@@ -3,13 +3,40 @@
 import { useState } from "react";
 import { Link, Button } from "@heroui/react";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
+import { Router } from "next/router";
+import { redirect } from "next/navigation";
 
 function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const {
+        data: session,
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = authClient.useSession()
+
+    console.log(session, isPending);
+
+    const user = session?.user;
+    console.log(user);
+
+    const handleSignOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    redirect("/signin");
+                },
+            },
+        });
+    }
+
+
+
     return (
         <nav className="fixed  top-5 left-0 right-0 z-50 ">
-          
+
             <div className="mx-auto max-w-7xl px-4">
                 <div className="
                     flex h-20 items-center justify-between
@@ -102,12 +129,21 @@ function NavBar() {
                         <div className="hidden md:flex items-center gap-5">
                             <div className="h-6 w-px bg-white/20" />
 
-                            <Link
-                                href="/signin"
-                                className="text-violet-400 hover:text-violet-300"
-                            >
-                                Sign In
-                            </Link>
+                            {
+                                user ? <>hello, {user.name}</> : <Link href="/signin">Sign In</Link>
+                            }
+                            {
+                                user && <Button onClick={handleSignOut} className="
+                                    bg-red-900
+                                    px-4
+                                    py-2
+                                    text-white
+                                    font-medium
+                                    hover:bg-red-500
+                                ">
+                                    Sign Out
+                                </Button>
+                            }
 
                             <Button
                                 radius="lg"
@@ -151,9 +187,9 @@ function NavBar() {
                                 <Link href="#">Pricing</Link>
                             </li>
 
-                            <li>
-                                <Link href="#">Sign In</Link>
-                            </li>
+                            {
+                                user ? <>hello {user.name}</> : <Link href="/signin">Sign In</Link>
+                            }
 
                             <Button
                                 color="secondary"
