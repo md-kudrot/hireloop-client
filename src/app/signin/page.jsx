@@ -70,8 +70,8 @@ export default function SignInPage() {
     }
 
     return (
-        <div className="min-h-screen w-full absolute z-20  bg-black flex items-center justify-center px-6 py-12">
-            <div className="w-full max-w-md">
+        <div className="min-h-screen w-full  bg-transparent flex items-center justify-center px-6 py-12">
+            <div className="w-full max-w-md border p-4 px-6 rounded-lg">
                 {/* Logo Section */}
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold">

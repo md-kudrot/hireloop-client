@@ -26,6 +26,7 @@ function NavBar() {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
+                    refetch()
                     redirect("/signin")
                 }
             }

@@ -1,36 +1,31 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { Magnifier, MapPin, Briefcase } from '@gravity-ui/icons'; import Image from 'next/image';
-;
-
+import { useState } from "react"
+import { Magnifier, MapPin, Briefcase } from "@gravity-ui/icons"
+import Image from "next/image"
 export default function Hero() {
     // State for search inputs
-    const [jobSearch, setJobSearch] = useState('');
-    const [locationSearch, setLocationSearch] = useState('');
+    const [jobSearch, setJobSearch] = useState("")
+    const [locationSearch, setLocationSearch] = useState("")
 
     // Hero data - easy to maintain
     const heroData = {
         badge: {
-            icon: '🔥',
-            text: '50,000+ NEW JOBS THIS MONTH'
+            icon: "🔥",
+            text: "50,000+ NEW JOBS THIS MONTH"
         },
-        heading: 'Find Your Dream Job Today',
-        subheading: 'HireLoop connects top talent with world-class companies. Browse thousands of curated opportunities and land your next role — faster.',
+        heading: "Find Your Dream Job Today",
+        subheading:
+            "HireLoop connects top talent with world-class companies. Browse thousands of curated opportunities and land your next role — faster.",
         searchPlaceholders: {
-            job: 'Job title, skill or company',
-            location: 'Location or Remote'
+            job: "Job title, skill or company",
+            location: "Location or Remote"
         },
-        trendingTags: [
-            'Trending Position',
-            'Product Designer',
-            'AI Engineering',
-            'Dev-ops Engineer'
-        ]
-    };
+        trendingTags: ["Trending Position", "Product Designer", "AI Engineering", "Dev-ops Engineer"]
+    }
 
     return (
-        <section className="bg-slate-950   flex items-center justify-center mt-10 px-6 relative overflow-hidden">
+        <section className="bg-transparent   flex items-center justify-center mt-10 px-6 relative overflow-hidden">
             {/* Animated Background Particles (Optional - subtle effect) */}
             <div className="absolute inset-0 opacity-20">
                 <div className="absolute w-1 h-1 bg-blue-500 rounded-full top-20 left-20 animate-pulse"></div>
@@ -40,7 +35,6 @@ export default function Hero() {
 
             {/* Content Container */}
             <div className="max-w-4xl mx-auto text-center relative z-10">
-
                 {/* Badge */}
                 <div className="mb-8 flex justify-center">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gray-700 bg-gray-900/50 backdrop-blur-sm hover:border-gray-600 transition-colors">
@@ -63,7 +57,6 @@ export default function Hero() {
 
                 {/* Search Bar */}
                 <div className="mb-8 flex flex-col sm:flex-row gap-3 bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
-
                     {/* Job Search Input */}
                     <div className="flex-1 flex items-center gap-3 bg-gray-800/50 px-4 py-3 rounded-md">
                         <Magnifier size={18} className="text-gray-500 flex-shrink-0" />
@@ -109,5 +102,5 @@ export default function Hero() {
                 </div>
             </div>
         </section>
-    );
+    )
 }

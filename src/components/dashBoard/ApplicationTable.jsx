@@ -93,7 +93,7 @@ const ApplicationTable = () => {
     }
 
     return (
-        <div className="bg-gray-950 text-white min-h-screen p-6">
+        <div className="bg-transparent text-white min-h-screen p-6">
             <div className="">
                 {/* Header Section */}
                 <div className="mb-8">
