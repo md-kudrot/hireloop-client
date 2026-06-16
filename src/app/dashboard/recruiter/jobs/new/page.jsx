@@ -70,29 +70,53 @@ export default function JobPostingForm() {
         }
     }
 
-    // ✅ UPDATED: Handle form submit - access image from formData
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
+            // Validation
             if (!formData.jobTitle || !formData.jobCategory || !formData.company) {
                 alert("Please fill in all required fields")
                 return
             }
 
-            // logoPreview বাদ দিয়ে বাকি data পাঠাও
-            const { logoPreview, ...jobData } = formData
+            if (!formData.logoPreview) {
+                alert("Please upload a company logo")
+                return
+            }
 
-            console.log("✅ Sending job data:", jobData)
-            console.log("🚀 Calling createJob...")
-            console.log("formData keys:", Object.keys(formData))
-            console.log("logoPreview type:", typeof formData.logoPreview)
-            console.log("logoPreview length:", formData.logoPreview?.length)
-            const res = await createJob(jobData)
+            // Step 1: ImgBB তে logo upload করো
+            const base64Image = formData.logoPreview.split(",")[1]
+            const imgData = new FormData()
+            imgData.append("image", base64Image)
+
+            const imgRes = await fetch(`https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`, {
+                method: "POST",
+                body: imgData
+            })
+            const imgJson = await imgRes.json()
+
+            if (!imgJson.success) {
+                alert("Logo upload failed!")
+                return
+            }
+
+            const logoURL = imgJson.data.url
+            console.log("✅ Logo URL:", logoURL)
+
+            // Step 2: logoPreview বাদ দিয়ে logoURL যোগ করো
+            const { logoPreview, ...jobData } = formData
+            const finalData = { ...jobData, logoURL }
+
+            console.log("🚀 Final data sending:", finalData)
+
+            // Step 3: Server Action call করো
+            const res = await createJob(finalData)
+            console.log(res)
 
             if (res.insertedId) {
-                alert("Job posted successfully")
+                alert("✅ Job posted successfully!")
             } else {
-                alert("Failed to post job")
+                alert("❌ Failed to post job")
             }
         } catch (error) {
             console.error("❌ Error posting job:", error)

@@ -17,10 +17,10 @@ function NavBar() {
         refetch //refetch the session
     } = authClient.useSession()
 
-    console.log(session, isPending)
+    // console.log(session, isPending)
 
     const user = session?.user
-    console.log(user)
+    // console.log(user)
 
     const handleSignOut = async () => {
         await authClient.signOut({

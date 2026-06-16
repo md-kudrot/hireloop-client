@@ -1,6 +1,6 @@
 "use server"
-const SERVER_URL = process.env.SERVER_URL
-console.log("SERVER_URL:", SERVER_URL)
+// const SERVER_URL = process.env.SERVER_URL
+// console.log("SERVER_URL:", SERVER_URL)
 export const createJob = async (newJobData) => {
     const res = await fetch(`http://localhost:5000/api/new_jobs`, {
         method: "POST",
