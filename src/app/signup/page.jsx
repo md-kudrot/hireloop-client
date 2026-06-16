@@ -69,11 +69,18 @@ export default function SignUpPage() {
         const user = Object.fromEntries(fromData.entries())
         console.log(user)
 
+        const plan = "free"
+        const formDataObj = new FormData(e.currentTarget)
+        const role = formDataObj.get("role")
+
         const { data, error } = await authClient.signUp.email({
             name: user.firstName + " " + user.lastName, // required
             email: user.email, // required
-            password: user.password, // required
-            role: user.plan
+            password: user.password // required
+            // additionalFields: {
+            //     plan,
+            //     role
+            // }
         })
 
         if (data) {
@@ -85,32 +92,6 @@ export default function SignUpPage() {
             alert("signup error " + error.message)
         }
     }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-
-    //     const formData = new FormData(e.currentTarget);
-    //     const user = Object.fromEntries(formData.entries());
-    //     console.log(user);
-
-    //     const { data, error } = await authClient.signUp.email({
-    //         email: user.email,
-    //         password: user.password,
-    //         name: user.name,
-    //         image: user.image
-    //     })
-    //     // console.log(error, data);
-
-    //     if (data) {
-    //         toast.success('Account created successfully!');
-    //         redirect('/')
-    //     }
-
-    //     if (error) {
-    //         toast.error(error.message)
-    //     }
-
-    // }
 
     return (
         <div className="min-h-screen w-full bg-transparent flex items-center justify-center px-6 py-12">
@@ -287,7 +268,7 @@ export default function SignUpPage() {
 
                     {/* user */}
                     <div className="">
-                        <RadioGroup defaultValue="Job_seeker" name="plan">
+                        <RadioGroup defaultValue="Job_seeker" name="role">
                             <Label>Please select your role</Label>
                             <Description>So we can tailor the experience for you</Description>
                             <Radio value="Job_seeker">

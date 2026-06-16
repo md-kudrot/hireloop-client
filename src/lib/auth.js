@@ -13,10 +13,18 @@ export const auth = betterAuth({
         // Optional: if you don't provide a client, database transactions won't be enabled.
         client
     }),
+
     user: {
         additionalFields: {
+            plan: {
+                type: "string",
+                defaultValue: "free",
+                required: false
+            },
             role: {
-                defaultValue: "seeker"
+                type: "string",
+                defaultValue: "Job_seeker",
+                required: false
             }
         }
     }

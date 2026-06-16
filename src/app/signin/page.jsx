@@ -59,6 +59,8 @@ export default function SignInPage() {
             password: user.password
         })
 
+        
+
         if (error) {
             console.error("Sign-in error:", error)
             alert("Failed to sign in. Please check your credentials and try again.")

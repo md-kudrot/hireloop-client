@@ -17,10 +17,11 @@ function NavBar() {
         refetch //refetch the session
     } = authClient.useSession()
 
-    // console.log(session, isPending)
+    console.log(session, isPending)
 
     const user = session?.user
-    // console.log(user)
+    const role = user?.role.toLowerCase() || "recruiter"
+    // console.log(user?.role.toLowerCase())
 
     const handleSignOut = async () => {
         await authClient.signOut({
@@ -95,8 +96,12 @@ function NavBar() {
                             </li>
 
                             <li>
-                                <Link href="#" className="text-gray-300 hover:text-white transition">
-                                    Pricing
+                                <Link
+                                    // href={`/dashboard/${user?.role}}`}
+                                    href={`/dashboard/${role}`}
+                                    className="text-gray-300 hover:text-white transition"
+                                >
+                                    DashBoard
                                 </Link>
                             </li>
                         </ul>
